@@ -66,5 +66,10 @@ namespace DrawingAppVehicles
             moveFigure = null;
             pictureBox1.Refresh();
         }
+
+        private void btnSquare_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

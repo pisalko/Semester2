@@ -53,6 +53,7 @@
             this.btnSquare.TabIndex = 1;
             this.btnSquare.Text = "square";
             this.btnSquare.UseVisualStyleBackColor = true;
+            this.btnSquare.Click += new System.EventHandler(this.btnSquare_Click);
             // 
             // btnTriangle
             // 
