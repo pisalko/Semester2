@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DrawingAppVehicles
 {
-    public abstract class Figure
+    public abstract class Figure : IShape
     {
         protected int x1, y1;
         protected int x2, y2;
