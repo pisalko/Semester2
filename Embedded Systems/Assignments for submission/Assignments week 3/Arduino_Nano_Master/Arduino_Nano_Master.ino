@@ -163,8 +163,7 @@ void ssFlush()
 
 void ssPrintWithCheck(String printData)
 {
-  ss.print(printData);
-  delay(20);  
+  ss.print(printData);  
   if (waitForOKDIY())
   {
     Serial.println("OK Received!");

@@ -1,9 +1,9 @@
 #include <SoftwareSerial.h>
 
-#define RX_PIN 7
-#define TX_PIN 8
-#define LEDR 12
-#define LEDG 13
+#define RX_PIN 12
+#define TX_PIN 13
+#define LEDR 7
+#define LEDG 8
 
 const int sizeBuff = 8; //Change only this if buffer needs to be larger
 char modeNow = '6';
@@ -30,25 +30,25 @@ char readSS()
   {
     if (counteri >= sizeBuff)
     {
-      Serial.println("Message length too large for buffer ? Unexpected message!");
-      ssFlush();
+      Serial.println("Message length too large for buffer ? Unexpected message!");    
       break;
     }
     else
     {
       buffi[counteri] = ss.read();
+      Serial.print(buffi);
       if (buffi[counteri] == '>')
       {
         ss.print("<OK>");
         Serial.println("data sent to ss - <OK>");
-        Serial.println(buffi[counteri - 1]);
+        //Serial.println(buffi);
         if (buffi[counteri - 1] ==  '1' || buffi[counteri - 1] ==  '2' || buffi[counteri - 1] ==  '3' || buffi[counteri - 1] ==  '4' || buffi[counteri - 1] ==  '5' || buffi[counteri - 1] ==  '6')
         {
            return buffi[counteri - 1];
         }
         else
           break;
-      }
+      }      
       counteri++;
     }
   }
@@ -80,8 +80,8 @@ void delayWithCheck(int interval)
 }
 
 void setup() {
-  Serial.begin(9600); //debugging
   ss.begin(9600);
+  Serial.begin(9600); //debugging  
   pinMode(LEDR, OUTPUT);
   pinMode(LEDG, OUTPUT);
 }
@@ -94,42 +94,55 @@ void loop() {
 
   switch (modeNow)
   {
-    case '1':
+    case 1:
       //key 1 = MASTER START with GREEN, hold GREEN 2 seconds continue RED & cycle
       //SLAVE START with RED, hold RED 2 seconds continue GREEN & cycle
-      Serial.println(modeNow);
+      digitalWrite(LEDG, LOW);
+      digitalWrite(LEDR, HIGH);
+      delayWithCheck(2000);
+      digitalWrite(LEDR, LOW);
+      digitalWrite(LEDG, HIGH);
+      delayWithCheck(2000);
       break;
 
-    case '2':
+    case 2:
       //key 2 = MASTER & SLAVE switch to RED until other mode
-      Serial.println(modeNow);
+      digitalWrite(LEDR, LOW);
+      digitalWrite(LEDG, HIGH);
       break;
 
-    case '3':
+    case 3:
       //key 3 = MASTER & SLAVE switch to GREEN until other mode.
-      Serial.println(modeNow);
+      digitalWrite(LEDG, LOW);
+      digitalWrite(LEDR, HIGH);
       break;
 
-    case '4':
+    case 4:
       //key 4 = MASTER START with GREEN, hold GREEN 5 seconds continue RED & cycle
       //SLAVE START with RED, hold RED 5 seconds continue GREEN & cycle
-      Serial.println(modeNow);
+      digitalWrite(LEDG, LOW);
+      digitalWrite(LEDR, HIGH);
+      delayWithCheck(5000);
+      digitalWrite(LEDR, LOW);
+      digitalWrite(LEDG, HIGH);
+      delayWithCheck(5000);
+
       break;
 
-    case '5':
+    case 5:
       //key 5 = MASTER START with GREEN, hold GREEN 10 seconds continue RED & cycle
       //SLAVE START with RED, hold RED 10 seconds continue GREEN & cycle
-      Serial.println(modeNow);
+      digitalWrite(LEDG, LOW);
+      digitalWrite(LEDR, HIGH);
+      delayWithCheck(10000);
+      digitalWrite(LEDR, LOW);
+      digitalWrite(LEDG, HIGH);
+      delayWithCheck(10000);
       break;
 
-    case '6':
+    case 6:
       //key 6 = BOTH MASTER & SLAVE turn off ALL lights.
       turnOffLEDs();
-      Serial.println(modeNow);
-      break;
-
-    default:
-      Serial.println(modeNow);
       break;
   }
 }
