@@ -1,7 +1,7 @@
 #include <SoftwareSerial.h>
 
-#define RX_PIN 2
-#define TX_PIN 3
+#define RX_PIN 3
+#define TX_PIN 4
 #define LEDR 12
 #define LEDG 11
 #define KEY1 A0 //I am using a capacitive touch sensor (8 of them) as a keypad for controls and inputs
@@ -163,7 +163,8 @@ void ssFlush()
 
 void ssPrintWithCheck(String printData)
 {
-  ss.print(printData);  
+  ss.print(printData);
+  delay(20);  
   if (waitForOKDIY())
   {
     Serial.println("OK Received!");

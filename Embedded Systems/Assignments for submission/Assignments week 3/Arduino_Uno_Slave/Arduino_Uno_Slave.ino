@@ -22,35 +22,73 @@ void ssFlush()
   while (ss.read() >= 0);
 }
 
+/*void returnOk (String bufff)
+{
+  char f = bufff[sizeBuff];
+  Serial.println(f);
+  if (f == '>')
+  {
+    ss.print("<OK>");
+    Serial.println("data sent to ss - <OK>");
+  }
+}
+
+String readIntoBuffer()
+{
+  int buffPlace = 0;
+  char buff[sizeBuff];
+  while (ss.available())
+  {
+    buff[buffPlace] = ss.read();
+    buffPlace++;
+  }
+  String vale = buff;
+  returnOk(buff);
+  return vale;
+}
+
 char readSS()
 {
+  String ssReadAsString = readIntoBuffer();
+  //Serial.println(ssReadAsString[sizeBuff - 1]);
+  return ssReadAsString[sizeBuff - 2];
+}*/
+
+char readSS()
+{
+  //delay(10);
   char buffi[sizeBuff];
   int counteri = 0;
   while (ss.available())
   {
+    //delay(10);
     if (counteri >= sizeBuff)
     {
-      Serial.println("Message length too large for buffer ? Unexpected message!");    
+      Serial.println("Message length too large for buffer ? Unexpected message!");
       break;
     }
     else
     {
-      buffi[counteri] = ss.read();
-      Serial.print(buffi);
+      char c = ss.read();
+      buffi[counteri] = c;
+      Serial.print(buffi[counteri]);
       if (buffi[counteri] == '>')
       {
         ss.print("<OK>");
         Serial.println("data sent to ss - <OK>");
         //Serial.println(buffi);
+        //buffi[counteri] = '=';
+        
         if (buffi[counteri - 1] ==  '1' || buffi[counteri - 1] ==  '2' || buffi[counteri - 1] ==  '3' || buffi[counteri - 1] ==  '4' || buffi[counteri - 1] ==  '5' || buffi[counteri - 1] ==  '6')
         {
-           return buffi[counteri - 1];
+          //Serial.println(buffi[counteri - 1]);
+          return buffi[counteri - 1];
         }
         else
           break;
-      }      
-      counteri++;
+      }
     }
+    counteri++;
   }
   return '0';
 }
@@ -70,7 +108,7 @@ void delayWithCheck(int interval)
   {
     if (checkForMode())
     {
-      turnOffLEDs();
+      //turnOffLEDs();
       char c = readSS();
       if (!(c == '0'))
         modeNow = c;
@@ -81,20 +119,22 @@ void delayWithCheck(int interval)
 
 void setup() {
   ss.begin(9600);
-  Serial.begin(9600); //debugging  
+  Serial.begin(9600); //debugging
   pinMode(LEDR, OUTPUT);
   pinMode(LEDG, OUTPUT);
 }
 
 void loop() {
-
+turnOffLEDs();
   char c = readSS();
   if (!(c == '0'))
     modeNow = c;
 
+    Serial.println(modeNow);
+
   switch (modeNow)
   {
-    case 1:
+    case '1':
       //key 1 = MASTER START with GREEN, hold GREEN 2 seconds continue RED & cycle
       //SLAVE START with RED, hold RED 2 seconds continue GREEN & cycle
       digitalWrite(LEDG, LOW);
@@ -105,19 +145,19 @@ void loop() {
       delayWithCheck(2000);
       break;
 
-    case 2:
+    case '2':
       //key 2 = MASTER & SLAVE switch to RED until other mode
-      digitalWrite(LEDR, LOW);
-      digitalWrite(LEDG, HIGH);
-      break;
-
-    case 3:
-      //key 3 = MASTER & SLAVE switch to GREEN until other mode.
-      digitalWrite(LEDG, LOW);
       digitalWrite(LEDR, HIGH);
+      digitalWrite(LEDG, LOW);
       break;
 
-    case 4:
+    case '3':
+      //key 3 = MASTER & SLAVE switch to GREEN until other mode.
+      digitalWrite(LEDG, HIGH);
+      digitalWrite(LEDR, LOW);
+      break;
+
+    case '4':
       //key 4 = MASTER START with GREEN, hold GREEN 5 seconds continue RED & cycle
       //SLAVE START with RED, hold RED 5 seconds continue GREEN & cycle
       digitalWrite(LEDG, LOW);
@@ -129,7 +169,7 @@ void loop() {
 
       break;
 
-    case 5:
+    case '5':
       //key 5 = MASTER START with GREEN, hold GREEN 10 seconds continue RED & cycle
       //SLAVE START with RED, hold RED 10 seconds continue GREEN & cycle
       digitalWrite(LEDG, LOW);
@@ -140,7 +180,7 @@ void loop() {
       delayWithCheck(10000);
       break;
 
-    case 6:
+    case '6':
       //key 6 = BOTH MASTER & SLAVE turn off ALL lights.
       turnOffLEDs();
       break;
