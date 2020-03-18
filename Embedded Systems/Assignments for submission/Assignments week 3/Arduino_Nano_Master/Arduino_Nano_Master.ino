@@ -272,7 +272,7 @@ void loop() {
 
 
 
-//ARDUINO NANO
+//ARDUINO NANO - MASTER
 
 //protocol:
 // Start message - <
