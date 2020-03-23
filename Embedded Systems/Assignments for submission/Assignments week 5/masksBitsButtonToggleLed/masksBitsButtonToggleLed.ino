@@ -29,7 +29,7 @@ void loop() {
   {
     btnOldState = btnState;
     btnClick = true;
-  }
+  }//
   else
   { 
     btnClick = false;
