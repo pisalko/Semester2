@@ -66,8 +66,10 @@ void setup() {
 }
 
 void loop() {
-    Serial.println(String(getHum()));
+    Serial.println("Relative Humidity in the room upon request: " + String(getHum()) + '%');
     delay(500);
-    Serial.println(String(getTemp()));
+    Serial.println("Room temperature in Celsius upon request: " + String(getTemp()) + "°C");
     delay(500);
+    Serial.println("*\n*\n*\n*\n*\n*");
+    delay(2000);
 }
