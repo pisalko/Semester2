@@ -2,9 +2,10 @@
 
 namespace Assignment1Sem2
 {
-    interface Package
+    public interface Package //Public interface, so we can create instances of it in Member and Forms as well
     {
         double GetPrice();
         string Name { get; }
+        bool IsBought { get; set; }
     }
 }
