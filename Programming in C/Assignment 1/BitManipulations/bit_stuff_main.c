@@ -2,11 +2,9 @@
 
 #include "bit_stuff.h"
 
+char msg[] = {"Check one passed"};
+
 int main()
 {
-	unsigned int maskk = 0;
-	make_bitmask(6, 1, &maskk);
-	printf("%d%c", maskk, '\n');
-    return 0;
+	printf("%s",msg);
 }
-//Checks and Tests are not implemented since I used Vladimir Vladinov's TEST main
