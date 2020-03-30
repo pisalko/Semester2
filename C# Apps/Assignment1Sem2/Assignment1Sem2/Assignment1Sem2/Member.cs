@@ -73,6 +73,7 @@ namespace Assignment1Sem2
        private int PackagesBought() //Returns the number of packages bough by the member
        {
             int packagesBought = 0;
+
             if (SwimmingPool)
                 packagesBought++;
             if (Dance)
@@ -87,6 +88,7 @@ namespace Assignment1Sem2
         public void PriceOwned()            //Indicates how much money the member owes. Mathemathics are done in the separate classes themselves.
         {            
             int packBought = PackagesBought();
+
             if (packBought == 0)
             {
                 owns = 0;
@@ -102,7 +104,7 @@ namespace Assignment1Sem2
                 if (Billiards)
                     package = new Billiards();
             }
-            else if (packBought > 1) //We add Packages to a MultiPackage object to indicate what and how many packages the member has bought.
+            else if (packBought > 1)        //We add Packages to a MultiPackage object to indicate what and how many packages the member has bought.
             {
                 package = new MultiPackage();
                 packageWorking = package as MultiPackage;
@@ -142,6 +144,7 @@ namespace Assignment1Sem2
                         break;
                 }
             }
+
             if (HasPaid) //This comes into play when "Has paid" button is pressed
                 owns = 0;
         }
