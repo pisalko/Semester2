@@ -1,0 +1,36 @@
+7zip (zip files)
+ARDUINO !!!!!! WITH LIBRARIRES !!!!!! Jsons: http://diy.mikolex.de/package_esp8266com_index.json, https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+bitcomet (torch?)
+discord
+cisco anyconnect
+filezilla
+git
+chrome/torch
+intelliJ (Eclipse??)
+java
+Lightshot !!!!! -- flameshot
+microsoft office
+Visual studio (Python and c#)
+notepad++ haha
+python
+MPC HC
+RStudio
+Spotify
+TeamViewer
+Unity
+Viber
+VMWare Workstation (Azure from fontys studentplein)
+WHatsapp
+WireShark
+
+
+caprine
+viber desktop
+drivers gpu ?
+lutris
+wine
+vmware with windows
+VSCode
+gcc primerno
+thundermail setup
+
