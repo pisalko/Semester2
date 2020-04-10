@@ -1,6 +1,6 @@
 #include <Wire.h>
 
-bool command = false;
+byte address;
 
 void setup() {
   Wire.begin();
@@ -9,67 +9,59 @@ void setup() {
 
 void loop() {
   String c = "";
-  byte address;
   while (Serial.available())
   {
-    char v = Serial.read();
-    if (v == '\n')
-      return;
-    c += v;
-    uint8_t transitionInt = c.toInt();
-    address = (byte)transitionInt;
-    command = true;
-
-  }
-  if (command)
-  {
-    Wire.beginTransmission(42);
-    Wire.write(address);
-    switch (c.toInt())
+    c = Serial.readString();
+    c.trim();
+    if ( c.startsWith("w"))
     {
-      case 21:
-        Wire.write(address); //value sent after address (2nd byte) for write
+      short index = 0;
+      c = c.substring(1);
+      for (int i = 0; i < c.length(); i++)
+      {
+        if (c[i] == '=')
+        {
+          index = i;
+          break;
+        }
+      }
+      address = (byte)c.substring(0, index).toInt();
+      if ((int)address == 21 || (int)address == 22)
+      {
+        byte assignedValue = (byte)c.substring(index + 1, c.length()).toInt();
+        Wire.beginTransmission(42);
+        Wire.write(address);
+        Wire.endTransmission();
+        Wire.beginTransmission(42);
+        Wire.write(assignedValue);
+        Wire.endTransmission();
+      }
+      else
+      {
+        Wire.beginTransmission(42);
+        Wire.write(address);
         Wire.endTransmission();
         Wire.requestFrom(42, 1);
-        delay(30);
         while (Wire.available())
         {
-          Serial.print((char)Wire.read());
+          Serial.print((int)Wire.read());
         }
-        break;
-        
-      case 22:
-        Wire.write(address); //value sent after address (2nd byte) for write
-        Wire.endTransmission();
-        Wire.requestFrom(42, 1);
-        delay(30);
-        while (Wire.available())
-        {
-          Serial.print((char)Wire.read());
-        }
-        break;
-        
-      case 23:
-        Wire.endTransmission();
-        Wire.requestFrom(42, 1);
-        delay(30);
-        while (Wire.available())
-        {
-          Serial.print((char)Wire.read());
-        }
-        break;
-        
-      case 24:
-        Wire.endTransmission();
-        Wire.requestFrom(42, 1);
-        delay(30);
-        while (Wire.available())
-        {
-          Serial.print((char)Wire.read());
-        }
-        break;
+        Serial.println();
+      }
     }
-    command = false;
-    delay(1000);
+    else if ( c.startsWith("r"))
+    {
+      c = c.substring(1);
+      address = (byte)c.toInt();
+      Wire.beginTransmission(42);
+      Wire.write(address);
+      Wire.endTransmission();
+      Wire.requestFrom(42, 1);
+      while (Wire.available())
+      {
+        Serial.print((int)Wire.read());
+      }
+      Serial.println();
+    }
   }
 }
