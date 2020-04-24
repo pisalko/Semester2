@@ -1,27 +1,39 @@
 #include <Wire.h>
-#define sAddress 0x5a
+#define sAddressVOC 0x5a
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
   Wire.begin();
-  Wire.beginTransmission(sAddress);
-  Wire.write(0xB5);
-  Wire.endTransmission();
   delay(1000);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  Wire.requestFrom(sAddress, 9);
-  byte byteBuffer[9];
-  int counter = 0;
-  while (Wire.available())
+
+void ValuesVOC(uint16_t *co2Prediction, uint16_t *etvoc, int *statuss) 
+{
+ Wire.requestFrom(sAddressVOC, 9);
+  delay(50);
+  if (Wire.available())
   {
-    byteBuffer[counter] = Wire.read();
-    Serial.println((char)byteBuffer[counter]);
-    counter++;
-  }
-  Serial.println();
+    byte byteBuffer[9];
+
+    for ( int i = 0; i < 9; i++ ) 
+    {
+      byteBuffer[i] = Wire.read();
+      delay(10);
+    }
+    *co2Prediction = (int)(byteBuffer[0]<<8) | (byteBuffer[1]<<0);;
+    *etvoc = (byteBuffer[7]<<8) | (byteBuffer[8]<<0);
+    *statuss = (int)byteBuffer[2];
+  } 
+}
+
+
+void loop() {
+  uint16_t v,vv;
+  int s;
+  ValuesVOC(&v,&vv,&s);
+  Serial.println(v);
+  Serial.println(vv);
+  Serial.println(s);
   delay(1000);
 }
