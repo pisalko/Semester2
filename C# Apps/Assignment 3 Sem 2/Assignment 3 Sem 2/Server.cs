@@ -29,7 +29,7 @@ namespace Assignment_3_Sem_2
                 //I have port 42069 on my router forwarded, so
                 //outside clients can also connect and test the server (for assessment, anyone can communicate with it)
                 const string ADDRESS = "192.168.1.180";
-                const int PORT = 555;
+                const int PORT = 42069;
 
                 IPAddress ip = IPAddress.Parse(ADDRESS);
                 IPEndPoint localEndPoint = new IPEndPoint(ip, PORT);
@@ -124,7 +124,7 @@ namespace Assignment_3_Sem_2
                                             streamWriter.WriteLine("VALUE");
                                             streamWriter.Flush();
                                             string transitionS = streamReader.ReadLine();
-                                            transitionS = transitionS.Replace(".", ",");            //SYSTEM DEPENDANT !!! I dont know how to make it for every system to work..
+                                            transitionS = transitionS.Replace(".", ",");     //SYSTEM DEPENDANT !!! I dont know how to make it for every system to work..
                                             Form1.listBoxItems.Add("Client: " + transitionS);
                                             Console.WriteLine("Client says: " + transitionS);
                                             if (double.TryParse(transitionS, out double value))

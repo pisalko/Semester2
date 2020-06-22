@@ -34,7 +34,7 @@ namespace Assignment_3_Sem_2
             Node transitionNode = new Node();
             if (transitionNode == null)
             {
-                Console.Write("Memory is full");
+                Console.WriteLine("Memory is full");
                 return;
             }
 
@@ -46,7 +46,7 @@ namespace Assignment_3_Sem_2
         /// <summary>
         /// Removes the top elem of the stack and returns it
         /// </summary>
-        public string pop() 
+        public string pop()
         {
             if (head == null)
             {

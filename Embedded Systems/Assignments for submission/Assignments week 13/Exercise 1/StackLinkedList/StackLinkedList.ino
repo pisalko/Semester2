@@ -47,7 +47,7 @@ int stack_push(const double *elem)
   struct Node* transitionNode = new Node();
   if (!sizeof(transitionNode) == sizeof(struct Node*))
   {
-    Serial.println("Not eonugh memory, will create a Stack overflow");
+    Serial.println("Not enough memory, will create a Stack overflow");
     return -1;
   }
   transitionNode->data = *elem;
